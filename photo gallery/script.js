@@ -1,17 +1,21 @@
-const filterButtons = document.querySelectorAll(".filter_button button");
-const filterButtons = document.querySelectorAll(".filter_cards .card");
+document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.filter_buttons button');
+    const cards = document.querySelectorAll('.card');
 
-const filterCards = e =>{
-    document.querySelector(".active").classList.remove("active");
-    e.target.classList.add("active");
-   // console.log(e);
-   filterableCards.forEach(card => {
-    card.classList.add("hide");
-    if(card.data.name === e.target.dataset.name||e.target.dataset.name === "all"){
-        card.classList.add("hide");
-    }
-   });
-};
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
 
-//console.log(filterButtons,filterableCards);
-filterButtons.forEach(button=> button.addEventListener("click", filterCards));
+            const filter = button.getAttribute('data-name');
+            cards.forEach(card => {
+                if (filter === 'all' || card.getAttribute('data-name') === filter) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+});
